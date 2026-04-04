@@ -1,0 +1,123 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use PHPShield\Parser\ASTParser;
+use PHPShield\Visitor\TaintVisitor;
+use PhpParser\NodeTraverser;
+use Symfony\Component\Finder\Finder;
+
+echo "\n";
+echo "╔══════════════════════════════════════════════════════════════════╗\n";
+echo "║                   🔒 PHPShield v3.0                              ║\n";
+echo "║              Professional PHP Security Scanner                   ║\n";
+echo "║                   AST + Taint Analysis                          ║\n";
+echo "╚══════════════════════════════════════════════════════════════════╝\n";
+echo "\n";
+
+$target = $argv[1] ?? null;
+
+if (!$target) {
+    echo "📖 Usage: phpShield <file.php|directory>\n";
+    echo "\n";
+    echo "Examples:\n";
+    echo "  phpShield scanner.php              # Scan single file\n";
+    echo "  phpShield /path/to/project         # Scan directory\n";
+    echo "\n";
+    exit(1);
+}
+
+if (!file_exists($target)) {
+    echo "❌ Error: File/Directory not found: $target\n";
+    exit(1);
+}
+
+$allVulnerabilities = [];
+$totalFiles = 0;
+
+// Dizin ise tüm PHP dosyalarını bul
+if (is_dir($target)) {
+    echo "📂 Scanning directory: $target\n";
+    echo str_repeat("-", 50) . "\n";
+    
+    $finder = new Finder();
+    $finder->files()->in($target)->name('*.php');
+    
+    foreach ($finder as $file) {
+        $totalFiles++;
+        echo "  Scanning: " . $file->getRelativePathname() . "... ";
+        
+        $parser = new ASTParser();
+        $ast = $parser->parseFile($file->getRealPath());
+        
+        if (!$ast) {
+            echo "⚠️ Parse error\n";
+            continue;
+        }
+        
+        $traverser = new NodeTraverser();
+        $taintVisitor = new TaintVisitor();
+        $traverser->addVisitor($taintVisitor);
+        $traverser->traverse($ast);
+        
+        $vulns = $taintVisitor->getVulnerabilities();
+        if (!empty($vulns)) {
+            echo count($vulns) . " vulnerabilities found!\n";
+            foreach ($vulns as $vuln) {
+                $vuln['file'] = $file->getRelativePathname();
+                $allVulnerabilities[] = $vuln;
+            }
+        } else {
+            echo "✅ No issues\n";
+        }
+    }
+    
+    echo "\n" . str_repeat("=", 50) . "\n";
+    echo "📊 SCAN SUMMARY\n";
+    echo str_repeat("=", 50) . "\n";
+    echo "📁 Files scanned: $totalFiles\n";
+    echo "⚠️  Vulnerabilities found: " . count($allVulnerabilities) . "\n\n";
+    
+    if (!empty($allVulnerabilities)) {
+        echo "DETAILS:\n";
+        foreach ($allVulnerabilities as $vuln) {
+            $icon = $vuln['severity'] === 'CRITICAL' ? '🔴' : '🟠';
+            echo "  $icon {$vuln['file']}:{$vuln['line']} - [{$vuln['type']}] {$vuln['description']}\n";
+        }
+    } else {
+        echo "✅ No vulnerabilities found!\n";
+    }
+    
+} else {
+    // Tek dosya
+    echo "📂 Scanning file: " . basename($target) . "\n";
+    echo str_repeat("-", 50) . "\n";
+    
+    $parser = new ASTParser();
+    $ast = $parser->parseFile($target);
+    
+    if (!$ast) {
+        echo "❌ Parse error: Could not parse PHP file\n";
+        exit(1);
+    }
+    
+    $traverser = new NodeTraverser();
+    $taintVisitor = new TaintVisitor();
+    $traverser->addVisitor($taintVisitor);
+    $traverser->traverse($ast);
+    
+    $vulnerabilities = $taintVisitor->getVulnerabilities();
+    
+    if (empty($vulnerabilities)) {
+        echo "✅ No vulnerabilities found!\n";
+    } else {
+        echo "⚠️  Found " . count($vulnerabilities) . " vulnerabilities:\n\n";
+        foreach ($vulnerabilities as $vuln) {
+            $icon = $vuln['severity'] === 'CRITICAL' ? '🔴' : ($vuln['severity'] === 'HIGH' ? '🟠' : '🟡');
+            echo "  $icon Line {$vuln['line']}: [{$vuln['type']}] {$vuln['description']}\n";
+        }
+    }
+}
+
+echo "\n";

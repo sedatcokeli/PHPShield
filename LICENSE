@@ -1,0 +1,67 @@
+MIT License
+
+Copyright (c) 2024 Sedat Çökeli
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                         ⚠️  SORUMLULUK REDDİ / DISCLAIMER  ⚠️                  ║
+╠═══════════════════════════════════════════════════════════════════════════════╣
+║                                                                               ║
+║  Bu yazılım (PHPShield) yalnızca EĞİTİM ve SAVUNMA amaçlı geliştirilmiştir.  ║
+║                                                                               ║
+║  KESİNLİKLE YAPILMAYACAKLAR:                                                  ║
+║  ❌ İzinsiz sistemlere sızma testi yapmak                                     ║
+║  ❌ Başkalarının sitelerine zarar vermek                                      ║
+║  ❌ Yasadışı faaliyetlerde kullanmak                                          ║
+║  ❌ Kötü amaçlı yazılım geliştirmek                                           ║
+║                                                                               ║
+║  YAPABİLECEKLERİNİZ:                                                          ║
+║  ✅ Kendi projelerinizde güvenlik testi yapmak                                ║
+║  ✅ Yazılı izin aldığınız sistemleri test etmek                               ║
+║  ✅ Güvenlik açıklarını öğrenmek ve eğitim almak                              ║
+║  ✅ Kurumsal pentest sözleşmeniz varsa kullanmak                              ║
+║                                                                               ║
+║  🔴 UYARI: Bu aracı izinsiz kullananlar tüm yasal sorumluluğu kabul eder.    ║
+║  🔴 Yazar (Sedat Çökeli) bu aracın kötüye kullanımından kesinlikle            ║
+║      sorumlu değildir.                                                        ║
+║                                                                               ║
+║  📌 Yasal dayanak: TCK 243-245, 5651 Sayılı Kanun, 5237 Sayılı TCK           ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+This software (PHPShield) is developed for EDUCATIONAL and DEFENSIVE purposes only.
+
+STRICTLY PROHIBITED:
+❌ Unauthorized penetration testing
+❌ Damaging others' systems
+❌ Illegal activities
+❌ Developing malicious software
+
+ALLOWED USES:
+✅ Security testing on your own projects
+✅ Testing systems you have written permission for
+✅ Learning about security vulnerabilities
+✅ Use under professional pentest contract
+
+🔴 WARNING: Users who misuse this tool assume all legal responsibility.
+🔴 The author (Sedat Çökeli) is NOT responsible for any misuse.
+
+Legal basis: Turkish Penal Code Articles 243-245, Law No. 5651, TPC 5237
+EOF

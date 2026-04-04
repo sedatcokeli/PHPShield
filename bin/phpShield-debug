@@ -1,0 +1,39 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use PHPShield\Parser\ASTParser;
+use PHPShield\Visitor\TaintVisitor;
+use PhpParser\NodeTraverser;
+
+echo "=== DEBUG MODE ===\n";
+
+$filePath = $argv[1] ?? null;
+if (!$filePath) {
+    echo "Usage: phpShield-debug <file.php>\n";
+    exit(1);
+}
+
+$parser = new ASTParser();
+$ast = $parser->parseFile($filePath);
+
+if (!$ast) {
+    echo "Parse error!\n";
+    exit(1);
+}
+
+echo "AST nodes found: " . count($ast) . "\n";
+
+$traverser = new NodeTraverser();
+$taintVisitor = new TaintVisitor();
+$traverser->addVisitor($taintVisitor);
+$traverser->traverse($ast);
+
+$vulns = $taintVisitor->getVulnerabilities();
+$tainted = $taintVisitor->getTaintedVars();
+
+echo "Tainted vars: " . count($tainted) . "\n";
+echo "Vulnerabilities: " . count($vulns) . "\n";
+
+print_r($tainted);

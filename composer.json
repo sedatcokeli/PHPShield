@@ -1,0 +1,25 @@
+{
+    "name": "sedatcokeli/php_shield",
+    "description": "Professional PHP Security Scanner with AST & Taint Analysis",
+    "type": "project",
+    "license": "MIT",
+    "version": "3.0.0",
+    "authors": [
+        {
+            "name": "Sedat Çökeli",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "nikic/php-parser": "^4.15",
+        "symfony/finder": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPShield\\": "src/"
+        }
+    },
+    "bin": ["bin/phpShield"],
+    "minimum-stability": "stable"
+}

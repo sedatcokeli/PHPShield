@@ -1,0 +1,9 @@
+/vendor/
+/composer.lock
+/.phpunit.result.cache
+/.phpstan.cache
+/phpguardian_report_*.json
+/.DS_Store
+*.log
+*.tmp
+/cache/
